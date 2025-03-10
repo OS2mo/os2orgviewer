@@ -192,6 +192,16 @@ replace_remove_manager_engagement() {
   sed "s#VUE_APP_REMOVE_MANAGER_ENGAGEMENT: \".*\"#VUE_APP_REMOVE_MANAGER_ENGAGEMENT: '${VUE_APP_REMOVE_MANAGER_ENGAGEMENT}'#g" -i $index_file
 }
 
+replace_show_nickname() {
+  local index_file="/usr/share/nginx/html/index.html"
+
+  if [ ! -f $index_file ]; then
+    echo >&3 "$ME: ERROR: $index_file does not exist"
+    exit 1
+  fi
+  sed "s#VUE_APP_SHOW_NICKNAME: \".*\"#VUE_APP_SHOW_NICKNAME: '${VUE_APP_SHOW_NICKNAME}'#g" -i $index_file
+}
+
 replace_keycloak_client_id() {
   local index_file="/usr/share/nginx/html/index.html"
 

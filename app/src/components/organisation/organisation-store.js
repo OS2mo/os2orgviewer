@@ -60,11 +60,17 @@ const sortAssociations = function (people) {
   })
 }
 
-const sortByName = function (people) {
+const sortByName = function (people, state) {
   return people.sort((x, y) => {
-    let a = x.employee[0].name,
-      b = y.employee[0].name
-    return a == b ? 0 : a > b ? 1 : -1
+    let a =
+      state.show_nickname && x.employee[0].nickname
+        ? x.employee[0].nickname
+        : x.employee[0].name
+    let b =
+      state.show_nickname && y.employee[0].nickname
+        ? y.employee[0].nickname
+        : y.employee[0].name
+    return a === b ? 0 : a > b ? 1 : -1
   })
 }
 
@@ -73,6 +79,7 @@ const state = {
   remove_manager_engagement: convertToBoolean(
     OC_GLOBAL_CONF.VUE_APP_REMOVE_MANAGER_ENGAGEMENT
   ),
+  show_nickname: convertToBoolean(OC_GLOBAL_CONF.VUE_APP_SHOW_NICKNAME),
 }
 
 const getters = {
@@ -140,10 +147,12 @@ const actions = {
           substitute {
             uuid
             name
+            nickname
           }
           employee {
             uuid
             name
+            nickname
           }
           association_type {
             name
@@ -164,6 +173,7 @@ const actions = {
           employee {
             uuid
             name
+            nickname
           }
         }
         engagements @skip(if: $by_association) {
@@ -172,6 +182,7 @@ const actions = {
           employee {
             uuid
             name
+            nickname
           }
           job_function {
             name
@@ -191,7 +202,7 @@ const actions = {
         org_unit.associations = sortAssociations(org_unit.associations)
       }
       if (!by_association) {
-        org_unit.associations = sortByName(org_unit.engagements)
+        org_unit.associations = sortByName(org_unit.engagements, state)
       }
       commit("setOrgUnitData", org_unit)
     })

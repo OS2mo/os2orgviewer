@@ -25,6 +25,7 @@ const actions = {
             uuid
             current {
               name
+              nickname
               addresses {
                 uuid
                 value
@@ -52,6 +53,7 @@ const actions = {
           substitute {
             uuid
             name
+            nickname
           }
           dynamic_class {
             name

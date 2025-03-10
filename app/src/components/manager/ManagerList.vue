@@ -8,7 +8,10 @@
           :to="`/person/${m.employee[0].uuid}/${m.org_unit_uuid}/${root_uuid}`"
         >
           <span class="sr-only">Vis detaljer for </span>
-          {{ m.employee[0].name }}
+          <span v-if="show_nickname && m.employee[0].nickname">{{
+            m.employee[0].nickname
+          }}</span>
+          <span v-else>{{ m.employee[0].name }}</span>
         </router-link>
       </dd>
     </template>
@@ -16,8 +19,15 @@
 </template>
 
 <script>
+import { convertToBoolean } from "../../helpers"
+
 export default {
   props: ["managers"],
+  data: function () {
+    return {
+      show_nickname: convertToBoolean(OC_GLOBAL_CONF.VUE_APP_SHOW_NICKNAME),
+    }
+  },
   computed: {
     root_uuid: function () {
       return this.$store.getters.getRootUuid

@@ -92,6 +92,9 @@ VUE_APP_REMOVE_ENGAGEMENT_TYPE_UUID='[UUID]'
 # Remove manager engagements from engagements list (only use this with engagements, will fail with associations)
 VUE_APP_REMOVE_MANAGER_ENGAGEMENT=true
 
+# Show user's nickname if present, else show CPR-name
+VUE_APP_SHOW_NICKNAME=true
+
 # The keycloak client ID
 VUE_APP_KEYCLOAK_CLIENT_ID="orgviewer_med"
 
