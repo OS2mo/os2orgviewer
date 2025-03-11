@@ -57,6 +57,7 @@ services:
       # VUE_APP_REMOVE_CHILDREN_COUNT: "true"
       # VUE_APP_REMOVE_ENGAGEMENT_TYPE_UUID: '["8acc5743-044b-4c82-9bb9-4e572d82b524"]'
       # VUE_APP_REMOVE_MANAGER_ENGAGEMENT: "true"
+      # VUE_APP_SHOW_NICKNAME: "true"
       # VUE_APP_FAVICON_PATH: "https://www.frederikshavn.dk/Resources/images/favicon.ico"
       # VUE_APP_THEME_CSS: "frederikshavn.custom.css"
     volumes:

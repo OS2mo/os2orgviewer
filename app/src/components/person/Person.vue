@@ -21,7 +21,10 @@
                 d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
               />
             </svg>
-            <span class="oc-person-title">{{ person.name }}</span>
+            <span v-if="show_nickname && person.nickname" class="oc-person-title">{{
+              person.nickname
+            }}</span>
+            <span v-else class="oc-person-title">{{ person.name }}</span>
             <svg
               class="svg-close"
               xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +45,8 @@
       <div class="oc-person-body">
         <dl>
           <dt>Navn</dt>
-          <dd>{{ person.name }}</dd>
+          <dd v-if="show_nickname && person.nickname">{{ person.nickname }}</dd>
+          <dd v-else>{{ person.name }}</dd>
 
           <template v-if="engagement">
             <dt>{{ engagement.engagement_type.name }}</dt>
@@ -57,16 +61,14 @@
             <template v-if="association.substitute">
               <dt>Stedfortræder</dt>
               <dd>
-                <router-link :to="`/person/${association.substitute.uuid}`">
-                  {{ association.substitute.name }}
+                <router-link :to="`/person/${association.substitute[0].uuid}`">
+                  <span v-if="show_nickname && association.substitute[0].nickname">{{
+                    association.substitute[0].nickname
+                  }}</span>
+                  <span v-else>{{ association.substitute[0].name }}</span>
                 </router-link>
               </dd>
             </template>
-
-            <dt>Afdeling</dt>
-            <dd>
-              <engagement-list :list="person.engagements" />
-            </dd>
 
             <template v-if="association.dynamic_class">
               <template v-for="dclass in association.dynamic_class">
@@ -112,6 +114,7 @@ export default {
       show_extension_3: convertToBoolean(
         OC_GLOBAL_CONF.VUE_APP_SHOW_EXTENSION_3_VIBORG
       ),
+      show_nickname: convertToBoolean(OC_GLOBAL_CONF.VUE_APP_SHOW_NICKNAME),
     }
   },
   computed: {
@@ -132,7 +135,7 @@ export default {
         this.$route.params.orgUnitId
       ) {
         return this.person.associations.find((a) => {
-          return a.org_unit_uui === this.$route.params.orgUnitId
+          return a.org_unit_uuid === this.$route.params.orgUnitId
         })
       } else if (this.relation_type === "association" && this.person.associations) {
         return this.person.associations[0]

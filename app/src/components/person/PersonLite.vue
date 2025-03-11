@@ -19,7 +19,10 @@
             :to="`/person/${person.employee[0].uuid}/${org_uuid}/${root_uuid}`"
           >
             <span class="sr-only">Vis detaljer for </span>
-            {{ person.employee[0].name }} </router-link
+            <span v-if="show_nickname && person.employee[0].nickname">{{
+              person.employee[0].nickname
+            }}</span>
+            <span v-else>{{ person.employee[0].name }}</span> </router-link
           ><br />
         </template>
         <template v-else="person.employee.length == 0"> Vakant <br /> </template>
@@ -42,7 +45,10 @@
             :to="`/person/${person.substitute[0].uuid}/${org_uuid}`"
           >
             <span class="sr-only">Vis detaljer for </span>
-            {{ person.substitute[0].name }}
+            <span v-if="show_nickname && person.substitute[0].nickname">{{
+              person.substitute[0].nickname
+            }}</span>
+            <span v-else>{{ person.substitute[0].name }}</span>
           </router-link>
         </dd>
       </template>
@@ -62,6 +68,7 @@ export default {
       show_extension_3: convertToBoolean(
         OC_GLOBAL_CONF.VUE_APP_SHOW_EXTENSION_3_VIBORG
       ),
+      show_nickname: convertToBoolean(OC_GLOBAL_CONF.VUE_APP_SHOW_NICKNAME),
     }
   },
   computed: {
