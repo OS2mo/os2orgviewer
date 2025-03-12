@@ -259,6 +259,7 @@ replace_remove_person_count
 replace_remove_children_count
 replace_remove_engagement_type_uuid
 replace_remove_manager_engagement
+replace_show_nickname
 replace_keycloak_client_id
 replace_keycloak_client_secret
 replace_favicon_path
