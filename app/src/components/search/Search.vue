@@ -42,7 +42,8 @@
           <router-link v-else :to="`/person/${res.uuid}`">
             <span class="label">Person</span>
             <br />
-            <span>{{ res.name }}</span>
+            <span v-if="show_nickname && res.nickname">{{ res.nickname }}</span>
+            <span v-else>{{ res.name }}</span>
             <br />
             <span v-for="value in result2phonenumbers(res)">
               <div>{{ value }}</div>
@@ -57,6 +58,7 @@
 <script>
 import Vue from "vue"
 import { postQuery } from "../http/http.js"
+import { convertToBoolean } from "../../helpers"
 
 const orgUnitSearchQuery = `
   query OrgUnitsSearch($filter: OrganisationUnitFilter) {
@@ -93,6 +95,7 @@ const employeeSearchQuery = `
             __typename
             uuid
             name
+            nickname
             addresses(filter: {address_type: {scope:"PHONE"}}) {
               value
               address_type {
@@ -113,6 +116,7 @@ const employeeSearchQuery = `
             __typename
             uuid
             name
+            nickname
             addresses(filter: {address_type: {scope:"PHONE"}}) {
               value
               address_type {
@@ -136,6 +140,7 @@ export default {
       timeout: null,
       relation_type: this.$store.state.relation_type,
       searchType: "org_unit",
+      show_nickname: convertToBoolean(OC_GLOBAL_CONF.VUE_APP_SHOW_NICKNAME),
     }
   },
   computed: {
@@ -173,6 +178,7 @@ export default {
         __typename: person.__typename || "",
         uuid: person.uuid || "",
         name: person.name || "",
+        nickname: person.nickname || "",
         addresses: person.addresses || [],
       }
     },
