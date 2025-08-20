@@ -126,6 +126,7 @@ const actions = {
               name
               addresses {
                 uuid
+                name
                 value
                 visibility {
                   name

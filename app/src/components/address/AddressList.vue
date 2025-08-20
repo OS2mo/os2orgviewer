@@ -23,7 +23,7 @@
 
         <template v-else-if="address.address_type.scope === 'DAR'">
           <dt>{{ address.address_type.name }}</dt>
-          <dd><dawa-address :uuid="address.value" /></dd>
+          <dd>{{ address.name }}</dd>
         </template>
 
         <template v-else-if="address.address_type.scope === 'EMAIL'">
@@ -67,13 +67,9 @@
 </template>
 
 <script>
-import DawaAddress from "./Address.vue"
 import { convertToBoolean } from "../../helpers"
 
 export default {
-  components: {
-    DawaAddress,
-  },
   props: ["addresses"],
   data: function () {
     return {
