@@ -58,7 +58,7 @@
             <dt>Tilknytning</dt>
             <dd>{{ association.association_type.name }}</dd>
 
-            <template v-if="association.substitute">
+            <template v-if="association.substitute.length > 0">
               <dt>Stedfortræder</dt>
               <dd>
                 <router-link :to="`/person/${association.substitute[0].uuid}`">
