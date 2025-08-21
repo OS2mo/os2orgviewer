@@ -28,6 +28,7 @@ const actions = {
               nickname
               addresses {
                 uuid
+                name
                 value
                 visibility {
                   name
@@ -96,7 +97,7 @@ const actions = {
               engagements {
                 org_unit {
                   addresses {
-                    value
+                    name
                     address_type {
                       name
                     }

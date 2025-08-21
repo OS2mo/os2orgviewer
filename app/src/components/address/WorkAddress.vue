@@ -1,14 +1,9 @@
 <template>
-  <dawa-address v-if="work_address.value" :uuid="work_address.value" />
+  <span v-if="work_address.name">{{ work_address.name }}</span>
 </template>
 
 <script>
-import DawaAddress from "./Address.vue"
-
 export default {
-  components: {
-    DawaAddress,
-  },
   props: ["uuid"],
   data: function () {
     return {
