@@ -99,7 +99,7 @@ const actions = {
                   addresses {
                     name
                     address_type {
-                      name
+                      user_key
                     }
                   }
                 }
