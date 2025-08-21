@@ -14,7 +14,7 @@ export default {
     fetchWorkAddress: function (uuid) {
       this.$store.dispatch("fetchPersonWorkAddress", uuid).then((res) => {
         this.work_address = res.find((address) => {
-          return address.address_type.name === "Postadresse"
+          return address.address_type.user_key === "AddressMailUnit"
         })
       })
     },
