@@ -186,7 +186,7 @@ export default {
       const isOrgUnit = this.searchType === "org_unit"
       const query = isOrgUnit ? orgUnitSearchQuery : employeeSearchQuery
       const variables = isOrgUnit
-        ? { filter: { query: this.query } }
+        ? { filter: { query: this.query, ancestor: { uuids: this.root_uuid } } }
         : {
             engagement: this.relation_type === "engagement",
             engagementFilter: { employee: { query: this.query } },
