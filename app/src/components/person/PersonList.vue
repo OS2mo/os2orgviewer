@@ -1,26 +1,9 @@
 <template>
-  <div class="people-list-wrapper" v-if="people">
-    <ul
-      class="people-list"
-      v-if="remove_engagement_type_uuid && updated_people.length > 0"
-    >
-      <li v-for="updated_person in updated_people" :key="updated_person.uuid">
-        <person-lite :person="updated_person" />
-      </li>
-    </ul>
-    <ul
-      class="people-list"
-      v-else-if="!remove_engagement_type_uuid && people.length > 0"
-    >
-      <li v-for="person in people" :key="person.uuid">
-        <person-lite :person="person" />
-      </li>
-    </ul>
-    <p class="people-list-empty" v-if="!is_loading && people.length === 0">
-      Ingen <span v-if="relation_type === 'association'">tilknyttede</span
-      ><span v-else>ansatte</span> fundet
-    </p>
-  </div>
+  <ul class="people-list">
+    <li v-for="person in people" :key="person.uuid">
+      <person-lite :person="person" />
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -44,13 +27,20 @@ export default {
     is_loading: function () {
       return this.$store.getters.isLoading
     },
-    updated_people: function () {
-      let self = this
-      let updated_people_list = self.people.filter(
+    filtered_engagements() {
+      if (!this.people) return []
+      if (this.relation_type === "association") return []
+      return this.people.filter(
         (person) =>
-          !self.remove_engagement_type_uuid.includes(person.engagement_type_uuid)
+          !this.remove_engagement_type_uuid.includes(person.engagement_type_uuid)
       )
-      return updated_people_list
+    },
+
+    // Only associations (people without engagement_type_uuid)
+    associations() {
+      if (!this.people) return []
+      if (this.relation_type === "engagement") return []
+      return this.people.filter((person) => !person.engagement_type_uuid)
     },
   },
 }
