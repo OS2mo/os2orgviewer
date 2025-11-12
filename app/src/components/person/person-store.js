@@ -115,7 +115,9 @@ const actions = {
     `,
       variables: { uuid: uuid },
     }).then((res) => {
-      return res.employees.objects[0].current.engagements[0].org_unit[0].addresses
+      return (
+        res.employees.objects[0].current.engagements?.[0]?.org_unit?.[0].addresses ?? []
+      )
     })
   },
 }
