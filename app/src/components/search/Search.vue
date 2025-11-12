@@ -83,52 +83,35 @@ const orgUnitSearchQuery = `
   }`
 
 const employeeSearchQuery = `
-  query EmployeesSearch($engagement: Boolean!, $engagementFilter: EngagementFilter, $associationFilter: AssociationFilter) {
-    ...engagementOrAssociation
-  }
-
-  fragment engagementOrAssociation on Query {
-    engagements(filter: $engagementFilter) @include(if: $engagement) {
+  query EmployeeSearch(
+    $query: String!
+    $engagement: Boolean!
+    $association: Boolean!
+  ) {
+    employees(filter: { query: $query }) {
       objects {
         current {
-          person {
-            __typename
-            uuid
+          uuid
+          name
+          nickname
+          addresses(filter: { address_type: { scope: "PHONE" } }) {
             name
-            nickname
-            addresses(filter: {address_type: {scope:"PHONE"}}) {
-              value
-              address_type {
-                scope
-              }
-              visibility {
-                scope
-              }
+            visibility {
+              scope
             }
           }
+          ...engagementOrAssociation
         }
       }
     }
-    associations(filter: $associationFilter) @skip(if: $engagement) {
-      objects {
-        current {
-          person {
-            __typename
-            uuid
-            name
-            nickname
-            addresses(filter: {address_type: {scope:"PHONE"}}) {
-              value
-              address_type {
-                scope
-              }
-              visibility {
-                scope
-              }
-            }
-          }
-        }
-      }
+  }
+
+  fragment engagementOrAssociation on Employee {
+    engagements @include(if: $engagement) {
+      uuid
+    }
+    associations @include(if: $association) {
+      uuid
     }
   }`
 
@@ -161,17 +144,14 @@ export default {
       }))
     },
     processEmployeeResults(personRes) {
-      const people = personRes.engagements
-        ? personRes.engagements.objects.flatMap((value) =>
-            value.current.person.map((person) => this.formatPerson(person))
+      return (
+        personRes.employees?.objects
+          ?.filter(
+            (value) =>
+              value.current.associations?.length || value.current.engagements?.length
           )
-        : personRes.associations.objects.flatMap((value) =>
-            value.current.person.map((person) => this.formatPerson(person))
-          )
-      // Deduplicate results
-      return [
-        ...new Map(people.map((obj) => [`${obj.uuid}:${obj.name}`, obj])).values(),
-      ]
+          .map((value) => value.current) ?? []
+      )
     },
     formatPerson(person) {
       return {
@@ -188,9 +168,11 @@ export default {
       const variables = isOrgUnit
         ? { filter: { query: this.query, ancestor: { uuids: this.root_uuid } } }
         : {
-            engagement: this.relation_type === "engagement",
-            engagementFilter: { employee: { query: this.query } },
-            associationFilter: { employee: { query: this.query } },
+            query: this.query,
+            engagement:
+              this.relation_type === "engagement" || this.relation_type === "both",
+            association:
+              this.relation_type === "association" || this.relation_type === "both",
           }
 
       try {
@@ -220,7 +202,7 @@ export default {
             phone.visibility.scope == "PUBLIC"
           )
         })
-        .map((phone) => phone.value)
+        .map((phone) => phone.name)
     },
     navigateToPerson: function (person_uuid) {
       this.$store.dispatch("fetchPerson", person_uuid)

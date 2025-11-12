@@ -161,10 +161,13 @@ const actions = {
   },
   fetchOrgUnitsInTree: ({ rootState }, uuids) => {
     // TODO: Ideally, both variables and filtering would be functions instead of repeating in both fetches
-    let by_association = rootState.relation_type === "association" ? true : false
+    const include_associations =
+      rootState.relation_type === "association" || rootState.relation_type === "both"
+    const include_engagements =
+      rootState.relation_type === "engagement" || rootState.relation_type === "both"
     // This whole if/else is needed, since having `descendant` in the query, will not work correctly, when `hierarchies` are not provided
     let variables
-    if (rootState.org_unit_hierarchy_uuids) {
+    if (rootState.org_unit_hierarchy_uuids.length) {
       variables = {
         filter: {
           uuids: uuids,
@@ -173,20 +176,22 @@ const actions = {
         childFilter: {
           descendant: { hierarchy: { uuids: rootState.org_unit_hierarchy_uuids } },
         },
-        by_association: by_association,
+        include_associations: include_associations,
+        include_engagements: include_engagements,
       }
     } else {
       variables = {
         filter: {
           uuids: uuids,
         },
-        by_association: by_association,
+        include_associations: include_associations,
+        include_engagements: include_engagements,
       }
     }
 
     return postQuery({
       query: `
-      query GetOrgUnitsInTree($filter: OrganisationUnitFilter!, $childFilter: ParentBoundOrganisationUnitFilter, $by_association: Boolean!) {
+      query GetOrgUnitsInTree($filter: OrganisationUnitFilter!, $childFilter: ParentBoundOrganisationUnitFilter, $include_associations: Boolean!, $include_engagements: Boolean!) {
         org_units(filter: $filter) {
           objects {
             uuid
@@ -206,10 +211,10 @@ const actions = {
       }
 
       fragment association_or_engagement on OrganisationUnit {
-        associations @include(if: $by_association) {
+        associations @include(if: $include_associations) {
           uuid
         }
-        engagements @skip(if: $by_association) {
+        engagements @include(if: $include_engagements) {
           uuid
           engagement_type_uuid
         }
@@ -227,10 +232,13 @@ const actions = {
   },
   fetchChildrenForOrgUnit: ({ rootState, commit }, parentUuid) => {
     // TODO: Ideally, both variables and filtering would be functions instead of repeating in both fetches
-    let by_association = rootState.relation_type === "association" ? true : false
+    const include_associations =
+      rootState.relation_type === "association" || rootState.relation_type === "both"
+    const include_engagements =
+      rootState.relation_type === "engagement" || rootState.relation_type === "both"
     // This whole if/else is needed, since having `descendant` in the query, will not work correctly, when `hierarchies` are not provided
     let variables
-    if (rootState.org_unit_hierarchy_uuids) {
+    if (rootState.org_unit_hierarchy_uuids.length) {
       variables = {
         filter: {
           parent: { uuids: parentUuid },
@@ -239,20 +247,22 @@ const actions = {
         childFilter: {
           descendant: { hierarchy: { uuids: rootState.org_unit_hierarchy_uuids } },
         },
-        by_association: by_association,
+        include_associations: include_associations,
+        include_engagements: include_engagements,
       }
     } else {
       variables = {
         filter: {
           parent: { uuids: parentUuid },
         },
-        by_association: by_association,
+        include_associations: include_associations,
+        include_engagements: include_engagements,
       }
     }
 
     return postQuery({
       query: `
-        query GetChildrenForOrgUnit($filter: OrganisationUnitFilter!, $childFilter: ParentBoundOrganisationUnitFilter, $by_association: Boolean!) {
+        query GetChildrenForOrgUnit($filter: OrganisationUnitFilter!, $childFilter: ParentBoundOrganisationUnitFilter, $include_associations: Boolean!, $include_engagements: Boolean!) {
           org_units(filter: $filter) {
             objects {
               uuid
@@ -271,10 +281,10 @@ const actions = {
           }
         }
         fragment association_or_engagement on OrganisationUnit {
-          associations @include(if: $by_association) {
+          associations @include(if: $include_associations) {
             uuid
           }
-          engagements @skip(if: $by_association) {
+          engagements @include(if: $include_engagements) {
             uuid
             engagement_type_uuid
           }

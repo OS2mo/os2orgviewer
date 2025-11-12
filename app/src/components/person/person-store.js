@@ -16,10 +16,13 @@ const mutations = {
 }
 const actions = {
   fetchPerson: ({ commit, rootState }, uuid) => {
-    let by_association = rootState.relation_type === "association" ? true : false
+    const include_associations =
+      rootState.relation_type === "association" || rootState.relation_type === "both"
+    const include_engagements =
+      rootState.relation_type === "engagement" || rootState.relation_type === "both"
     return postQuery({
       query: `
-      query GetPerson($uuid: [UUID!], $by_association: Boolean!) {
+      query GetPerson($uuid: [UUID!], $include_associations: Boolean!, $include_engagements: Boolean!) {
         employees(filter: {uuids: $uuid}) {
           objects {
             uuid
@@ -46,7 +49,7 @@ const actions = {
       }
 
       fragment association_or_engagement on Employee {
-        associations @include(if: $by_association) {
+        associations @include(if: $include_associations) {
           org_unit_uuid
           association_type {
             name
@@ -63,7 +66,7 @@ const actions = {
             }
           }
         }
-        engagements @skip(if: $by_association) {
+        engagements @include(if: $include_engagements) {
           org_unit_uuid
           engagement_type {
             name
@@ -77,7 +80,8 @@ const actions = {
     `,
       variables: {
         uuid: uuid,
-        by_association: by_association,
+        include_associations: include_associations,
+        include_engagements: include_engagements,
       },
     }).then((res) => {
       let person = res.employees.objects[0].current

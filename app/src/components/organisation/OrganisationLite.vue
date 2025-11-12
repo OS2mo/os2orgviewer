@@ -10,9 +10,29 @@
       <span class="sr-only">Vis detaljer for </span>
       {{ orgUnit.name }}
     </p>
-    <p class="oc-org-link-count" v-if="!hide_person_count">
-      {{ displayPersonCount(orgUnit) }}
-    </p>
+    <div class="oc-org-link-count" v-if="!hide_person_count">
+      <div
+        v-if="
+          computePersonCounts(orgUnit).engagements !== undefined &&
+          (relation_type == 'engagement' || relation_type == 'both')
+        "
+      >
+        {{ computePersonCounts(orgUnit).engagements }}
+        {{ computePersonCounts(orgUnit).engagements === 1 ? "ansat" : "ansatte" }}
+      </div>
+      <div
+        v-if="
+          computePersonCounts(orgUnit).associations !== undefined &&
+          (relation_type == 'association' || relation_type == 'both')
+        "
+        class="ml-2"
+      >
+        {{ computePersonCounts(orgUnit).associations }}
+        {{
+          computePersonCounts(orgUnit).associations === 1 ? "tilknyttet" : "tilknyttede"
+        }}
+      </div>
+    </div>
   </router-link>
 </template>
 
@@ -25,6 +45,9 @@ export default {
   computed: {
     root_uuid: function () {
       return this.$store.getters.getRootUuid
+    },
+    relation_type() {
+      return this.$store.state.relation_type
     },
   },
   data: function () {
@@ -47,35 +70,37 @@ export default {
     },
   },
   methods: {
-    displayPersonCount: function (org_unit) {
-      let str = ""
-      if (org_unit.associations) {
-        str += org_unit.associations.length
-        if (Number(str) === 1) {
-          str += " tilknyttet"
-        } else {
-          str += " tilknyttede"
-        }
-      } else if (org_unit.engagements) {
+    computePersonCounts(org_unit) {
+      const counts = {
+        engagements: 0,
+        associations: 0,
+      }
+
+      const relation_type = this.$store.state.relation_type // "engagement" | "association" | "both"
+
+      // Engagements: only if relation_type is "engagement" or "both"
+      if (
+        (relation_type === "engagement" || relation_type === "both") &&
+        org_unit.engagements?.length
+      ) {
         let eng = org_unit.engagements
-        if (this.remove_engagement_type_uuid) {
+        if (this.remove_engagement_type_uuid?.length) {
           eng = eng.filter(
-            (engagement) =>
-              !this.remove_engagement_type_uuid.includes(
-                engagement.engagement_type_uuid
-              )
+            (e) => !this.remove_engagement_type_uuid.includes(e.engagement_type_uuid)
           )
         }
-        str += eng.length
-        if (Number(str) === 1) {
-          str += " ansat"
-        } else {
-          str += " ansatte"
-        }
-      } else {
-        return ""
+        counts.engagements = eng.length
       }
-      return str
+
+      // Associations: only if relation_type is "association" or "both"
+      if (
+        (relation_type === "association" || relation_type === "both") &&
+        org_unit.associations?.length
+      ) {
+        counts.associations = org_unit.associations.length
+      }
+
+      return counts
     },
   },
 }

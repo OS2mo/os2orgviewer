@@ -130,14 +130,17 @@ export default {
     },
     association: function () {
       if (
-        this.relation_type === "association" &&
+        (this.relation_type === "association" || this.relation_type === "both") &&
         this.person.associations &&
         this.$route.params.orgUnitId
       ) {
         return this.person.associations.find((a) => {
           return a.org_unit_uuid === this.$route.params.orgUnitId
         })
-      } else if (this.relation_type === "association" && this.person.associations) {
+      } else if (
+        (this.relation_type === "association" || this.relation_type === "both") &&
+        this.person.associations
+      ) {
         return this.person.associations[0]
       } else {
         return false
@@ -145,14 +148,17 @@ export default {
     },
     engagement: function () {
       if (
-        this.relation_type === "engagement" &&
+        (this.relation_type === "engagement" || this.relation_type === "both") &&
         this.person.engagements &&
         this.$route.params.orgUnitId
       ) {
         return this.person.engagements.find((e) => {
           return e.org_unit_uuid === this.$route.params.orgUnitId
         })
-      } else if (this.relation_type === "engagement" && this.person.engagements) {
+      } else if (
+        (this.relation_type === "engagement" || this.relation_type === "both") &&
+        this.person.engagements
+      ) {
         return this.person.engagements[0]
       } else {
         return false
@@ -179,7 +185,7 @@ export default {
       // Check if route already knows about this person's org unit
       // if not, update org unit uuid and redirect
       if (!this.$route.params.orgUnitId) {
-        if (this.relation_type === "association") {
+        if (this.relation_type === "association" || this.relation_type === "both") {
           this.$router.push(
             `/person/${this.person.uuid}/${this.person.associations[0].org_unit_uuid}/${this.root_uuid}`
           )
@@ -203,8 +209,12 @@ export default {
       if (!to.params.orgUnitId) {
         if (Store.state.relation_type === "association") {
           to.params.orgUnitId = person.associations[0].org_unit_uuid
-        } else {
+        } else if (Store.state.relation_type === "engagement") {
           to.params.orgUnitId = person.engagements[0].org_unit_uuid
+        } else if (Store.state.relation_type === "both") {
+          to.params.orgUnitId =
+            person.engagements?.[0]?.org_unit_uuid ??
+            person.associations?.[0]?.org_unit_uuid
         }
       }
       next()

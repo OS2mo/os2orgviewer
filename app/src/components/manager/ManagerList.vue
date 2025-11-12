@@ -1,21 +1,27 @@
-<template>
-  <dl class="oc-managers" v-if="managers && managers.length > 0">
-    <template v-for="m in managers">
-      <dt :key="m.manager_type.uuid">{{ m.manager_type.name }}</dt>
-      <dd :key="m.employee[0].uuid">
+<template v-if="managers && managers.length">
+  <ul class="people-list">
+    <li v-for="manager in managers">
+      <dt :key="manager.manager_type.uuid">{{ manager.manager_type.name }}</dt>
+      <dd
+        v-if="manager.employee && manager.employee.length"
+        :key="manager.employee[0].uuid"
+      >
         <router-link
           class="oc-person-open"
-          :to="`/person/${m.employee[0].uuid}/${m.org_unit_uuid}/${root_uuid}`"
+          :to="`/person/${manager.employee[0].uuid}/${manager.org_unit_uuid}/${root_uuid}`"
         >
           <span class="sr-only">Vis detaljer for </span>
-          <span v-if="show_nickname && m.employee[0].nickname">{{
-            m.employee[0].nickname
+          <span v-if="show_nickname && manager.employee[0].nickname">{{
+            manager.employee[0].nickname
           }}</span>
-          <span v-else>{{ m.employee[0].name }}</span>
+          <span v-else>{{ manager.employee[0].name }}</span>
         </router-link>
       </dd>
-    </template>
-  </dl>
+      <dd v-else>
+        <span>Vacant</span>
+      </dd>
+    </li>
+  </ul>
 </template>
 
 <script>

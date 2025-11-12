@@ -42,11 +42,39 @@
       </oc-header>
       <div class="oc-org-body">
         <address-list :addresses="org_unit_data.addresses" />
-        <template v-if="relation_is_engagement">
-          <manager-list :managers="org_unit_data.managers" />
-          <person-list :people="org_unit_data.engagements" />
+
+        <!-- Engagements -->
+        <template v-if="relation_is_engagement_or_both">
+          <div class="people-list-wrapper">
+            <p class="people-list-heading">Managers</p>
+            <manager-list :managers="org_unit_data.managers" />
+          </div>
+
+          <div class="people-list-wrapper">
+            <p class="people-list-heading">Engagementer</p>
+
+            <person-list
+              v-if="org_unit_data.engagements.length"
+              :people="org_unit_data.engagements"
+            />
+
+            <span v-else class="people-list-empty">Ingen ansatte fundet</span>
+          </div>
         </template>
-        <person-list v-else :people="org_unit_data.associations" />
+
+        <!-- Associations -->
+        <template v-if="relation_is_association_or_both">
+          <div class="people-list-wrapper">
+            <p class="people-list-heading">Tilknytninger</p>
+
+            <person-list
+              v-if="org_unit_data.associations.length"
+              :people="org_unit_data.associations"
+            />
+
+            <span v-else class="people-list-empty">Ingen tilknytninger fundet</span>
+          </div>
+        </template>
       </div>
     </article>
   </transition>
@@ -66,18 +94,24 @@ export default {
     AddressList,
     OcHeader,
   },
-  data: function () {
-    return {
-      relation_is_engagement:
-        this.$store.state.relation_type === "engagement" ? true : false,
-    }
-  },
   computed: {
     org_unit_data: function () {
       return this.$store.getters.getOrgUnitData
     },
     root_uuid: function () {
       return this.$store.getters.getRootUuid
+    },
+    relation_is_engagement_or_both() {
+      return (
+        this.$store.state.relation_type === "engagement" ||
+        this.$store.state.relation_type === "both"
+      )
+    },
+    relation_is_association_or_both() {
+      return (
+        this.$store.state.relation_type === "association" ||
+        this.$store.state.relation_type === "both"
+      )
     },
   },
   watch: {

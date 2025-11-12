@@ -44,7 +44,7 @@ services:
 
       # VUE_APP_ORG_UNIT_HIERARCHY_UUIDS: '["abbbefb2-85a6-4a5d-ad94-98a363adfee6", "418b313a-979f-4a26-807e-ba8dd3114d74"]'
       # VUE_APP_TITLE: "Andeby Kommune"
-      # VUE_APP_ORG_PERSON_RELATION: "engagement"
+      VUE_APP_ORG_PERSON_RELATION: "both"
       # VUE_APP_TREE_LAYOUT: "hybrid"
       # VUE_APP_LOGO_PATH: "https://frederikshavn.dk/Resources/images/frk_logo_blue.svg"
       # VUE_APP_HIDE_ORG_UNIT_UUIDS: '["b6c11152-0645-4712-a207-ba2c53b391ab", "7a8e45f7-4de0-44c8-990f-43c0565ee505"]'

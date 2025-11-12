@@ -114,11 +114,15 @@ const mutations = {
 
 const actions = {
   fetchOrgUnitData: ({ commit, rootState }, org_unit_uuid) => {
-    let by_association = rootState.relation_type === "association" ? true : false
+    const relation_type = rootState.relation_type // "association" | "engagement" | "both"
+    const include_associations =
+      relation_type === "association" || relation_type === "both"
+    const include_engagements =
+      relation_type === "engagement" || relation_type === "both"
 
     postQuery({
       query: `
-      query GetOrgUnit($uuid: [UUID!], $by_association: Boolean!) {
+      query GetOrgUnit($uuid: [UUID!], $include_associations: Boolean!, $include_engagements: Boolean!) {
         org_units(filter: {uuids: $uuid}) {
           objects {
             uuid
@@ -138,13 +142,7 @@ const actions = {
                   scope
                 }
               }
-              ...association_or_engagement
-            }
-          }
-        }
-      }
-      fragment association_or_engagement on OrganisationUnit {
-        associations @include(if: $by_association) {
+        associations @include(if: $include_associations) {
           substitute {
             uuid
             name
@@ -165,7 +163,7 @@ const actions = {
             }
           }
         }
-        managers(inherit: true) @skip(if: $by_association) {
+        managers(inherit: true) @include(if: $include_engagements) {
           org_unit_uuid
           manager_type {
             uuid
@@ -177,7 +175,7 @@ const actions = {
             nickname
           }
         }
-        engagements @skip(if: $by_association) {
+        engagements @include(if: $include_engagements) {
           org_unit_uuid
           engagement_type_uuid
           employee {
@@ -190,20 +188,24 @@ const actions = {
           }
           extension_3
         }
+            }
+          }
+        }
       }
       `,
       variables: {
         uuid: org_unit_uuid,
-        by_association: by_association,
+        include_associations: include_associations,
+        include_engagements: include_engagements,
       },
     }).then((res) => {
       let org_unit = res["org_units"].objects[0].current
       org_unit.uuid = res["org_units"].objects[0].uuid
-      if (by_association) {
+      if (include_associations) {
         org_unit.associations = sortAssociations(org_unit.associations)
       }
-      if (!by_association) {
-        org_unit.associations = sortByName(org_unit.engagements, state)
+      if (include_engagements) {
+        org_unit.engagements = sortByName(org_unit.engagements, state)
       }
       commit("setOrgUnitData", org_unit)
     })

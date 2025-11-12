@@ -1,6 +1,6 @@
 function convertToArray(string) {
-  // Takes a string formatted as an array. Returns an actual array
-  return string ? string.replace(/['"[\]\ ]/g, "").split(",") : null
+  if (!string) return [] // <-- return empty array
+  return string.replace(/['"[\]\ ]/g, "").split(",")
 }
 
 function convertToBoolean(string) {

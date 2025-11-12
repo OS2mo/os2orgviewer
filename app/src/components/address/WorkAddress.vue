@@ -1,5 +1,5 @@
 <template>
-  <span v-if="work_address.name">{{ work_address.name }}</span>
+  <span v-if="work_address && work_address.name">{{ work_address.name }}</span>
 </template>
 
 <script>
