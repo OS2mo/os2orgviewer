@@ -46,7 +46,7 @@
         <!-- Engagements -->
         <template v-if="relation_is_engagement_or_both">
           <div class="people-list-wrapper">
-            <p class="people-list-heading">Managers</p>
+            <p class="people-list-heading">Ledere</p>
             <manager-list :managers="org_unit_data.managers" />
           </div>
 
