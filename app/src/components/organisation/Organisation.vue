@@ -51,7 +51,7 @@
           </div>
 
           <div class="people-list-wrapper">
-            <p class="people-list-heading">Engagementer</p>
+            <p class="people-list-heading">Ansatte</p>
 
             <person-list
               v-if="org_unit_data.engagements.length"
