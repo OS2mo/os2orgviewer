@@ -87,11 +87,10 @@ const getters = {
     if (
       state.remove_manager_engagement &&
       state.org_unit &&
-      state.org_unit.managers.length
+      state.org_unit.engagements.length
     ) {
       state.org_unit.engagements = state.org_unit.engagements.filter(
-        (engagement) =>
-          !(engagement.employee[0].uuid === state.org_unit.managers[0].employee[0].uuid)
+        (engagement) => !engagement.employee[0].manager_roles.length
       )
     }
     return state.org_unit
@@ -142,52 +141,55 @@ const actions = {
                   scope
                 }
               }
-        associations @include(if: $include_associations) {
-          substitute {
-            uuid
-            name
-            nickname
-          }
-          employee {
-            uuid
-            name
-            nickname
-          }
-          association_type {
-            name
-          }
-          dynamic_class {
-            name
-            parent {
-              name
-            }
-          }
-        }
-        managers(inherit: true) @include(if: $include_engagements) {
-          org_unit_uuid
-          manager_type {
-            uuid
-            name
-          }
-          employee {
-            uuid
-            name
-            nickname
-          }
-        }
-        engagements @include(if: $include_engagements) {
-          org_unit_uuid
-          engagement_type_uuid
-          employee {
-            uuid
-            name
-            nickname
-          }
-          job_function {
-            name
-          }
-          extension_3
-        }
+              associations @include(if: $include_associations) {
+                substitute {
+                  uuid
+                  name
+                  nickname
+                }
+                employee {
+                  uuid
+                  name
+                  nickname
+                }
+                association_type {
+                  name
+                }
+                dynamic_class {
+                  name
+                  parent {
+                    name
+                  }
+                }
+              }
+              managers(inherit: true) @include(if: $include_engagements) {
+                org_unit_uuid
+                manager_type {
+                  uuid
+                  name
+                }
+                employee {
+                  uuid
+                  name
+                  nickname
+                }
+              }
+              engagements @include(if: $include_engagements) {
+                org_unit_uuid
+                engagement_type_uuid
+                employee {
+                  uuid
+                  name
+                  nickname
+                  manager_roles {
+                    uuid
+                  }
+                }
+                job_function {
+                  name
+                }
+                extension_3
+              }
             }
           }
         }
