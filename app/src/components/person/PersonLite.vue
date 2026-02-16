@@ -49,6 +49,9 @@
           <span v-if="show_extension_3 && person.extension_3">{{
             person.extension_3
           }}</span>
+          <span v-else-if="show_extension_1 && person.extension_1">{{
+            person.extension_1
+          }}</span>
           <span v-else-if="person.job_function">{{ person.job_function.name }}</span>
           <span v-else>Ansat</span>
         </dt>
@@ -82,6 +85,7 @@ export default {
       show_extension_3: convertToBoolean(
         OC_GLOBAL_CONF.VUE_APP_SHOW_EXTENSION_3_VIBORG
       ),
+      show_extension_1: convertToBoolean(OC_GLOBAL_CONF.VUE_APP_SHOW_EXTENSION_1),
       show_nickname: convertToBoolean(OC_GLOBAL_CONF.VUE_APP_SHOW_NICKNAME),
     }
   },

@@ -51,6 +51,7 @@
           <template v-if="engagement">
             <dt>{{ engagement.engagement_type.name }}</dt>
             <dd v-if="show_extension_3">{{ engagement.extension_3 }}</dd>
+            <dd v-else-if="show_extension_1">{{ engagement.extension_1 }}</dd>
             <dd v-else>{{ engagement.job_function.name }}</dd>
           </template>
 
@@ -114,6 +115,7 @@ export default {
       show_extension_3: convertToBoolean(
         OC_GLOBAL_CONF.VUE_APP_SHOW_EXTENSION_3_VIBORG
       ),
+      show_extension_1: convertToBoolean(OC_GLOBAL_CONF.VUE_APP_SHOW_EXTENSION_1),
       show_nickname: convertToBoolean(OC_GLOBAL_CONF.VUE_APP_SHOW_NICKNAME),
     }
   },

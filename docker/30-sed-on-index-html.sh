@@ -132,6 +132,16 @@ replace_sort_specific_units_to_bottom() {
   sed "s#VUE_APP_SORT_SPECIFIC_UNITS_TO_BOTTOM: \".*\"#VUE_APP_SORT_SPECIFIC_UNITS_TO_BOTTOM: '${VUE_APP_SORT_SPECIFIC_UNITS_TO_BOTTOM}'#g" -i $index_file
 }
 
+replace_show_extension_1() {
+  local index_file="/usr/share/nginx/html/index.html"
+
+  if [ ! -f $index_file ]; then
+    echo >&3 "$ME: ERROR: $index_file does not exist"
+    exit 1
+  fi
+  sed "s#VUE_APP_SHOW_EXTENSION_1: \".*\"#VUE_APP_SHOW_EXTENSION_1: '${VUE_APP_SHOW_EXTENSION_1}'#g" -i $index_file
+}
+
 replace_show_extension_3_viborg() {
   local index_file="/usr/share/nginx/html/index.html"
 
@@ -253,6 +263,7 @@ replace_hide_org_unit_uuids
 replace_hide_org_units_by_name
 replace_hide_org_unit_levels
 replace_sort_specific_units_to_bottom
+replace_show_extension_1
 replace_show_extension_3_viborg
 replace_remove_org_unit_email
 replace_remove_person_count

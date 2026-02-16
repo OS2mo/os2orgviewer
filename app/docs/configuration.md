@@ -74,6 +74,9 @@ VUE_APP_HIDE_ORG_UNIT_LEVELS='[UUID]'
 # Sort specific org_units to bottom of tree by UUID
 VUE_APP_SORT_SPECIFIC_UNITS_TO_BOTTOM='[UUID]'
 
+# Show 'extension_1' instead of job_function (Silkeborg)
+VUE_APP_SHOW_EXTENSION_1=True
+
 # Show 'extension_3' instead of job_function (Viborg)
 VUE_APP_SHOW_EXTENSION_3_VIBORG=True
 
