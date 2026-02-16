@@ -51,6 +51,7 @@ services:
       # VUE_APP_HIDE_ORG_UNITS_BY_NAME: '["_leder", "Ø_", "_adm", "_COVID", "_vikar"]'
       # VUE_APP_HIDE_ORG_UNIT_LEVELS: '["abbbefb2-85a6-4a5d-ad94-98a363adfee6", "418b313a-979f-4a26-807e-ba8dd3114d74"]'
       # VUE_APP_SORT_SPECIFIC_UNITS_TO_BOTTOM: '["b6c11152-0645-4712-a207-ba2c53b391ab", "7a8e45f7-4de0-44c8-990f-43c0565ee505"]'
+      # VUE_APP_SHOW_EXTENSION_1: "true"
       # VUE_APP_SHOW_EXTENSION_3_VIBORG: "true"
       # VUE_APP_REMOVE_ORG_UNIT_EMAIL: "true"
       # VUE_APP_REMOVE_PERSON_COUNT: "true"
