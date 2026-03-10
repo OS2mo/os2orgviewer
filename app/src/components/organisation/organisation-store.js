@@ -87,6 +87,7 @@ const getters = {
     if (
       state.remove_manager_engagement &&
       state.org_unit &&
+      state.org_unit.engagements &&
       state.org_unit.engagements.length
     ) {
       state.org_unit.engagements = state.org_unit.engagements.filter(

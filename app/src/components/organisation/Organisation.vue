@@ -54,11 +54,9 @@
             <p class="people-list-heading">Ansatte</p>
 
             <person-list
-              v-if="org_unit_data.engagements.length"
-              :people="org_unit_data.engagements"
+              :people="org_unit_data.engagements || []"
+              relation_type="engagement"
             />
-
-            <span v-else class="people-list-empty">Ingen ansatte fundet</span>
           </div>
         </template>
 
@@ -68,11 +66,9 @@
             <p class="people-list-heading">Tilknytninger</p>
 
             <person-list
-              v-if="org_unit_data.associations.length"
-              :people="org_unit_data.associations"
+              :people="org_unit_data.associations || []"
+              relation_type="association"
             />
-
-            <span v-else class="people-list-empty">Ingen tilknytninger fundet</span>
           </div>
         </template>
       </div>
@@ -182,6 +178,10 @@ export default {
   padding: 1rem;
   flex-grow: 1;
   overflow: auto;
+}
+
+.people-list-wrapper {
+  border-top: solid 1px var(--shade-lighter);
 }
 
 .oc-org .svg-path {
