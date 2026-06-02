@@ -191,7 +191,7 @@ const actions = {
 
     return postQuery({
       query: `
-      query GetOrgUnitsInTree($filter: OrganisationUnitFilter!, $childFilter: ParentBoundOrganisationUnitFilter, $include_associations: Boolean!, $include_engagements: Boolean!) {
+      query GetOrgUnitsInTree($filter: OrganisationUnitFilter!, $childFilter: ParentParentsBoundOrganisationUnitFilter, $include_associations: Boolean!, $include_engagements: Boolean!) {
         org_units(filter: $filter) {
           objects {
             uuid
@@ -262,7 +262,7 @@ const actions = {
 
     return postQuery({
       query: `
-        query GetChildrenForOrgUnit($filter: OrganisationUnitFilter!, $childFilter: ParentBoundOrganisationUnitFilter, $include_associations: Boolean!, $include_engagements: Boolean!) {
+        query GetChildrenForOrgUnit($filter: OrganisationUnitFilter!, $childFilter: ParentParentsBoundOrganisationUnitFilter, $include_associations: Boolean!, $include_engagements: Boolean!) {
           org_units(filter: $filter) {
             objects {
               uuid
