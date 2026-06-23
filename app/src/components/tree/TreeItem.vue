@@ -32,7 +32,6 @@
 import OrgLite from "../organisation/OrganisationLite.vue"
 import ExpandToggle from "./ExpandToggle.vue"
 import RootSetToggle from "./RootSetToggle.vue"
-import { convertToArray } from "../../helpers"
 
 export default {
   name: "tree-item",
@@ -42,16 +41,12 @@ export default {
     RootSetToggle,
   },
   props: ["uuid"],
-  data: function () {
-    return {
-      sort_specific_units_to_bottom: convertToArray(
-        OC_GLOBAL_CONF.VUE_APP_SORT_SPECIFIC_UNITS_TO_BOTTOM
-      ),
-    }
-  },
   computed: {
     org_unit: function () {
       return this.$store.getters.getTreeOrgUnit(this.uuid)
+    },
+    sort_specific_units_to_bottom() {
+      return this.$store.state.sort_specific_units_to_bottom
     },
     sorted_org_unit_children: function () {
       let org_unit = this.$store.getters.getTreeOrgUnit(this.uuid)

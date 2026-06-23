@@ -14,23 +14,18 @@
 
 <script>
 import PersonLite from "./PersonLite.vue"
-import { convertToArray } from "../../helpers"
 
 export default {
   components: {
     PersonLite,
   },
-  data: function () {
-    return {
-      remove_engagement_type_uuid: convertToArray(
-        OC_GLOBAL_CONF.VUE_APP_REMOVE_ENGAGEMENT_TYPE_UUID
-      ),
-    }
-  },
   props: ["people", "relation_type"],
   computed: {
     is_loading: function () {
       return this.$store.getters.isLoading
+    },
+    remove_engagement_type_uuid() {
+      return this.$store.state.remove_engagement_type_uuid
     },
     display_people() {
       if (!this.people) return []

@@ -28,8 +28,6 @@
 </template>
 
 <script>
-import { convertToBoolean } from "../../helpers"
-
 export default {
   props: ["orgUnit"],
   computed: {
@@ -37,7 +35,10 @@ export default {
       return this.$store.getters.getRootUuid
     },
     count() {
-      return this.orgUnit.child_count || 0 // Return 0 if child_count is undefined
+      return this.orgUnit.child_count || 0
+    },
+    hide_children_count() {
+      return this.$store.state.remove_children_count
     },
   },
   watch: {
@@ -85,13 +86,6 @@ export default {
       this.setShowChildren(false) // Initialize to false if undefined
     }
     this.updateShowChildren(this.$route)
-  },
-  data() {
-    return {
-      hide_children_count: convertToBoolean(
-        OC_GLOBAL_CONF.VUE_APP_REMOVE_CHILDREN_COUNT
-      ),
-    }
   },
 }
 </script>

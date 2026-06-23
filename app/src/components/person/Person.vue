@@ -100,7 +100,6 @@ import AddressList from "../address/AddressList.vue"
 import EngagementList from "./Engagements.vue"
 import WorkAddress from "../address/WorkAddress.vue"
 import Store from "../../store.js"
-import { convertToBoolean } from "../../helpers"
 
 export default {
   components: {
@@ -109,19 +108,21 @@ export default {
     EngagementList,
     WorkAddress,
   },
-  data: function () {
-    return {
-      relation_type: this.$store.state.relation_type,
-      show_extension_3: convertToBoolean(
-        OC_GLOBAL_CONF.VUE_APP_SHOW_EXTENSION_3_VIBORG
-      ),
-      show_extension_1: convertToBoolean(OC_GLOBAL_CONF.VUE_APP_SHOW_EXTENSION_1),
-      show_nickname: convertToBoolean(OC_GLOBAL_CONF.VUE_APP_SHOW_NICKNAME),
-    }
-  },
   computed: {
     person: function () {
       return this.$store.getters.getPerson
+    },
+    relation_type() {
+      return this.$store.state.relation_type
+    },
+    show_extension_3() {
+      return this.$store.state.show_extension_3_viborg
+    },
+    show_extension_1() {
+      return this.$store.state.show_extension_1
+    },
+    show_nickname() {
+      return this.$store.state.show_nickname
     },
     org_uuid: function () {
       if (this.$route.params.orgUnitId) {

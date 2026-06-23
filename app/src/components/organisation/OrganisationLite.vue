@@ -38,7 +38,6 @@
 
 <script>
 import Vue from "vue"
-import { convertToArray, convertToBoolean } from "../../helpers"
 
 export default {
   props: ["orgUnit"],
@@ -49,14 +48,12 @@ export default {
     relation_type() {
       return this.$store.state.relation_type
     },
-  },
-  data: function () {
-    return {
-      hide_person_count: convertToBoolean(OC_GLOBAL_CONF.VUE_APP_REMOVE_PERSON_COUNT),
-      remove_engagement_type_uuid: convertToArray(
-        OC_GLOBAL_CONF.VUE_APP_REMOVE_ENGAGEMENT_TYPE_UUID
-      ),
-    }
+    hide_person_count() {
+      return this.$store.state.remove_person_count
+    },
+    remove_engagement_type_uuid() {
+      return this.$store.state.remove_engagement_type_uuid
+    },
   },
   watch: {
     $route: function (to, from) {

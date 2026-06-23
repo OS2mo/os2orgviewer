@@ -25,18 +25,14 @@
 </template>
 
 <script>
-import { convertToBoolean } from "../../helpers"
-
 export default {
   props: ["managers"],
-  data: function () {
-    return {
-      show_nickname: convertToBoolean(OC_GLOBAL_CONF.VUE_APP_SHOW_NICKNAME),
-    }
-  },
   computed: {
     root_uuid: function () {
       return this.$store.getters.getRootUuid
+    },
+    show_nickname() {
+      return this.$store.state.show_nickname
     },
   },
 }

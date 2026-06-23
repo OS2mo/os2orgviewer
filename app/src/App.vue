@@ -103,14 +103,18 @@ export default {
   },
   data: function () {
     return {
-      title: OC_GLOBAL_CONF.VUE_APP_TITLE,
-      logo_src: OC_GLOBAL_CONF.VUE_APP_LOGO_PATH,
       first_load: true,
     }
   },
   computed: {
     is_loading: function () {
       return this.$store.getters.isLoading
+    },
+    title() {
+      return this.$store.state.title
+    },
+    logo_src() {
+      return this.$store.state.logo_path
     },
     global_root_uuid: function () {
       return this.$store.getters.getGlobalRootUuid
@@ -150,7 +154,7 @@ export default {
   // TODO: Maybe we should make more use of vuehead, rather than using index.html
   head: {
     link: function () {
-      return [{ rel: "icon", href: OC_GLOBAL_CONF.VUE_APP_FAVICON_PATH, undo: false }]
+      return [{ rel: "icon", href: this.$store.state.favicon_path, undo: false }]
     },
   },
 }
