@@ -62,6 +62,7 @@ const filterOrgUnits = function (orgUnits, config) {
 }
 
 const state = {
+  root_uuid: null,
   org_units: {},
   tree_is_loading: false,
 }
@@ -71,7 +72,7 @@ const getters = {
     return state.org_units
   },
   getRootUuid: (state, getters, rootState) => {
-    return rootState.global_root_uuid
+    return state.root_uuid || rootState.global_root_uuid
   },
   getOrgUnitHierarchyUuid: (state, getters, rootState) => {
     return rootState.org_unit_hierarchy_uuids
@@ -84,6 +85,9 @@ const getters = {
   },
 }
 const mutations = {
+  setRootUuid: (state, uuid) => {
+    state.root_uuid = uuid
+  },
   setOrgUnit: (state, org_unit) => {
     let new_org = Object.assign({}, org_unit, state.org_units[org_unit.uuid])
     Vue.set(state.org_units, org_unit.uuid, new_org)
