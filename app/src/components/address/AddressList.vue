@@ -67,16 +67,12 @@
 </template>
 
 <script>
-import { convertToBoolean } from "../../helpers"
-
 export default {
   props: ["addresses"],
-  data: function () {
-    return {
-      remove_org_unit_email: convertToBoolean(
-        OC_GLOBAL_CONF.VUE_APP_REMOVE_ORG_UNIT_EMAIL
-      ),
-    }
+  computed: {
+    remove_org_unit_email() {
+      return this.$store.state.remove_org_unit_email
+    },
   },
 }
 </script>

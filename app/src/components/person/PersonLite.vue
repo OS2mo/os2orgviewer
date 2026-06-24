@@ -76,22 +76,20 @@
 </template>
 
 <script>
-import { convertToBoolean } from "../../helpers"
-
 export default {
   props: ["person"],
-  data: function () {
-    return {
-      show_extension_3: convertToBoolean(
-        OC_GLOBAL_CONF.VUE_APP_SHOW_EXTENSION_3_VIBORG
-      ),
-      show_extension_1: convertToBoolean(OC_GLOBAL_CONF.VUE_APP_SHOW_EXTENSION_1),
-      show_nickname: convertToBoolean(OC_GLOBAL_CONF.VUE_APP_SHOW_NICKNAME),
-    }
-  },
   computed: {
     root_uuid: function () {
       return this.$store.getters.getRootUuid
+    },
+    show_extension_3() {
+      return this.$store.state.show_extension_3_viborg
+    },
+    show_extension_1() {
+      return this.$store.state.show_extension_1
+    },
+    show_nickname() {
+      return this.$store.state.show_nickname
     },
     org_uuid: function () {
       return this.$route.params.orgUnitId

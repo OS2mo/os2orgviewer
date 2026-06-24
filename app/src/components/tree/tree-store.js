@@ -1,6 +1,5 @@
 import Vue from "vue"
 import { postQuery } from "../http/http.js"
-import { convertToArray, convertToBoolean } from "../../helpers.js"
 
 const setParentOrgUnitVisibility = function (parent_uuid) {
   let new_parent = state.org_units[parent_uuid]
@@ -34,26 +33,25 @@ const onLoadEndHandler = function (route) {
   mutations.setTreeLoadStatus(state, false)
 }
 
-const filterOrgUnits = function (orgUnits) {
-  // Function that filters according to featureflags and returns objects
-  if (state.hide_org_unit_uuids) {
-    orgUnits = orgUnits.filter((org) => !state.hide_org_unit_uuids.includes(org.uuid))
+const filterOrgUnits = function (orgUnits, config) {
+  if (config.hide_org_unit_uuids.length) {
+    orgUnits = orgUnits.filter((org) => !config.hide_org_unit_uuids.includes(org.uuid))
   }
 
-  if (state.hide_org_units_by_name) {
+  if (config.hide_org_units_by_name.length) {
     orgUnits = orgUnits.filter(
       (org) =>
-        !state.hide_org_units_by_name.some((substring) =>
+        !config.hide_org_units_by_name.some((substring) =>
           org.current.name.includes(substring)
         )
     )
   }
 
-  if (state.hide_org_unit_levels) {
+  if (config.hide_org_unit_levels.length) {
     orgUnits = orgUnits.filter(
       (org) =>
         !org.current.org_unit_level?.uuid ||
-        !state.hide_org_unit_levels.includes(org.current.org_unit_level.uuid)
+        !config.hide_org_unit_levels.includes(org.current.org_unit_level.uuid)
     )
   }
 
@@ -64,26 +62,20 @@ const filterOrgUnits = function (orgUnits) {
 }
 
 const state = {
-  root_uuid: OC_GLOBAL_CONF.VUE_APP_ROOT_UUID,
-  org_unit_hierarchy_uuids: convertToArray(
-    OC_GLOBAL_CONF.VUE_APP_ORG_UNIT_HIERARCHY_UUIDS
-  ),
+  root_uuid: null,
   org_units: {},
   tree_is_loading: false,
-  hide_org_unit_uuids: convertToArray(OC_GLOBAL_CONF.VUE_APP_HIDE_ORG_UNIT_UUIDS),
-  hide_org_units_by_name: convertToArray(OC_GLOBAL_CONF.VUE_APP_HIDE_ORG_UNITS_BY_NAME),
-  hide_org_unit_levels: convertToArray(OC_GLOBAL_CONF.VUE_APP_HIDE_ORG_UNIT_LEVELS),
 }
 
 const getters = {
   getOrgUnits: (state) => {
     return state.org_units
   },
-  getRootUuid: (state) => {
-    return state.root_uuid
+  getRootUuid: (state, getters, rootState) => {
+    return state.root_uuid || rootState.global_root_uuid
   },
-  getOrgUnitHierarchyUuid: (state) => {
-    return state.org_unit_hierarchy_uuids
+  getOrgUnitHierarchyUuid: (state, getters, rootState) => {
+    return rootState.org_unit_hierarchy_uuids
   },
   getTreeOrgUnit: (state) => (uuid) => {
     return state.org_units[uuid]
@@ -227,7 +219,7 @@ const actions = {
       }
       let orgUnits = res["org_units"]["objects"]
 
-      return filterOrgUnits(orgUnits)
+      return filterOrgUnits(orgUnits, rootState)
     })
   },
   fetchChildrenForOrgUnit: ({ rootState, commit }, parentUuid) => {
@@ -299,7 +291,7 @@ const actions = {
       let orgUnits = res["org_units"]["objects"]
 
       // Create an array of child objects without setting hasFetchedChildren
-      const childObjects = filterOrgUnits(orgUnits)
+      const childObjects = filterOrgUnits(orgUnits, rootState)
 
       // Commit the mutation to update the store with the fetched children
       commit("setChildrenForOrgUnit", { parentUuid, children: childObjects })

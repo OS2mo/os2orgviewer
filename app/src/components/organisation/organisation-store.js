@@ -1,6 +1,5 @@
 import Vue from "vue"
 import { postQuery } from "../http/http.js"
-import { convertToBoolean } from "../../helpers.js"
 
 const sortAssociations = function (people) {
   let unsorted_persons = []
@@ -76,16 +75,12 @@ const sortByName = function (people, state) {
 
 const state = {
   org_unit: null,
-  remove_manager_engagement: convertToBoolean(
-    OC_GLOBAL_CONF.VUE_APP_REMOVE_MANAGER_ENGAGEMENT
-  ),
-  show_nickname: convertToBoolean(OC_GLOBAL_CONF.VUE_APP_SHOW_NICKNAME),
 }
 
 const getters = {
-  getOrgUnitData: (state) => {
+  getOrgUnitData: (state, getters, rootState) => {
     if (
-      state.remove_manager_engagement &&
+      rootState.remove_manager_engagement &&
       state.org_unit &&
       state.org_unit.engagements &&
       state.org_unit.engagements.length
@@ -114,7 +109,7 @@ const mutations = {
 
 const actions = {
   fetchOrgUnitData: ({ commit, rootState }, org_unit_uuid) => {
-    const relation_type = rootState.relation_type // "association" | "engagement" | "both"
+    const relation_type = rootState.relation_type
     const include_associations =
       relation_type === "association" || relation_type === "both"
     const include_engagements =
@@ -199,8 +194,8 @@ const actions = {
       `,
       variables: {
         uuid: org_unit_uuid,
-        include_associations: include_associations,
-        include_engagements: include_engagements,
+        include_associations,
+        include_engagements,
       },
     }).then((res) => {
       let org_unit = res["org_units"].objects[0].current
@@ -209,7 +204,7 @@ const actions = {
         org_unit.associations = sortAssociations(org_unit.associations)
       }
       if (include_engagements) {
-        org_unit.engagements = sortByName(org_unit.engagements, state)
+        org_unit.engagements = sortByName(org_unit.engagements, rootState)
       }
       commit("setOrgUnitData", org_unit)
     })

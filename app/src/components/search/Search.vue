@@ -58,7 +58,6 @@
 <script>
 import Vue from "vue"
 import { postQuery } from "../http/http.js"
-import { convertToBoolean } from "../../helpers"
 
 const orgUnitSearchQuery = `
   query OrgUnitsSearch($filter: OrganisationUnitFilter) {
@@ -123,12 +122,14 @@ export default {
       timeout: null,
       relation_type: this.$store.state.relation_type,
       searchType: "org_unit",
-      show_nickname: convertToBoolean(OC_GLOBAL_CONF.VUE_APP_SHOW_NICKNAME),
     }
   },
   computed: {
     root_uuid: function () {
       return this.$store.getters.getRootUuid
+    },
+    show_nickname() {
+      return this.$store.state.show_nickname
     },
     searchPlaceHolder() {
       return `Indtast ${this.searchType === "org_unit" ? "organisation" : "person"}`

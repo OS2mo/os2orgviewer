@@ -67,14 +67,10 @@ export default {
       return this.$store.getters.getTreeLoadStatus
     },
     tree_layout_class: function () {
-      if (
-        OC_GLOBAL_CONF.VUE_APP_TREE_LAYOUT === "horizontal" ||
-        OC_GLOBAL_CONF.VUE_APP_TREE_LAYOUT === "hybrid"
-      ) {
-        return "oc-layout-horizontal"
-      } else {
-        return "oc-layout-vertical"
-      }
+      const layout = this.$store.state.tree_layout
+      return layout === "horizontal" || layout === "hybrid"
+        ? "oc-layout-horizontal"
+        : "oc-layout-vertical"
     },
   },
   watch: {
