@@ -162,6 +162,16 @@ replace_remove_org_unit_email() {
   sed "s#VUE_APP_REMOVE_ORG_UNIT_EMAIL: \".*\"#VUE_APP_REMOVE_ORG_UNIT_EMAIL: '${VUE_APP_REMOVE_ORG_UNIT_EMAIL}'#g" -i $index_file
 }
 
+replace_hidden_address_type_user_keys() {
+  local index_file="/usr/share/nginx/html/index.html"
+
+  if [ ! -f $index_file ]; then
+    echo >&3 "$ME: ERROR: $index_file does not exist"
+    exit 1
+  fi
+  sed "s#VUE_APP_HIDDEN_ADDRESS_TYPE_USER_KEYS: \".*\"#VUE_APP_HIDDEN_ADDRESS_TYPE_USER_KEYS: '${VUE_APP_HIDDEN_ADDRESS_TYPE_USER_KEYS}'#g" -i $index_file
+}
+
 replace_remove_person_count() {
   local index_file="/usr/share/nginx/html/index.html"
 
@@ -266,6 +276,7 @@ replace_sort_specific_units_to_bottom
 replace_show_extension_1
 replace_show_extension_3_viborg
 replace_remove_org_unit_email
+replace_hidden_address_type_user_keys
 replace_remove_person_count
 replace_remove_children_count
 replace_remove_engagement_type_uuid

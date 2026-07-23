@@ -44,6 +44,9 @@ export default new Vuex.Store({
     remove_org_unit_email: convertToBoolean(
       OC_GLOBAL_CONF.VUE_APP_REMOVE_ORG_UNIT_EMAIL
     ),
+    hidden_address_type_user_keys: convertToArray(
+      OC_GLOBAL_CONF.VUE_APP_HIDDEN_ADDRESS_TYPE_USER_KEYS
+    ),
     show_extension_1: convertToBoolean(OC_GLOBAL_CONF.VUE_APP_SHOW_EXTENSION_1),
     show_extension_3_viborg: convertToBoolean(
       OC_GLOBAL_CONF.VUE_APP_SHOW_EXTENSION_3_VIBORG
