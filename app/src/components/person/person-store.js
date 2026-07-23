@@ -39,6 +39,7 @@ const actions = {
                 address_type {
                   uuid
                   name
+                  user_key
                   scope
                 }
               }

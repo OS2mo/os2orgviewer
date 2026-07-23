@@ -1,6 +1,6 @@
 <template>
-  <dl class="oc-address-list" v-if="addresses && addresses.length > 0">
-    <template v-for="address in addresses">
+  <dl class="oc-address-list" v-if="visible_addresses && visible_addresses.length > 0">
+    <template v-for="address in visible_addresses">
       <div
         :key="address.uuid"
         v-if="!address.visibility || address.visibility.name !== 'Hemmelig'"
@@ -72,6 +72,12 @@ export default {
   computed: {
     remove_org_unit_email() {
       return this.$store.state.remove_org_unit_email
+    },
+    visible_addresses() {
+      const hidden = this.$store.state.hidden_address_type_user_keys
+      return (this.addresses || []).filter(
+        (a) => !hidden.includes(a.address_type.user_key)
+      )
     },
   },
 }
