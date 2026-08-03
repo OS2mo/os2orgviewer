@@ -20,7 +20,7 @@ replace_global_url() {
     echo >&3 "$ME: ERROR: $index_file does not exist"
     exit 1
   fi
-  sed "s#VUE_APP_API_BASEURL: \".*\"#VUE_APP_API_BASEURL: '${VUE_APP_API_BASEURL}'#g" -i $index_file
+  sed "s#VUE_APP_API_BASEURL: '.*'#VUE_APP_API_BASEURL: '${VUE_APP_API_BASEURL}'#g" -i $index_file
 }
 
 replace_global_root_uuid() {
@@ -30,7 +30,7 @@ replace_global_root_uuid() {
     echo >&3 "$ME: ERROR: $index_file does not exist"
     exit 1
   fi
-  sed "s#VUE_APP_ROOT_UUID: \".*\"#VUE_APP_ROOT_UUID: '${VUE_APP_ROOT_UUID}'#g" -i $index_file
+  sed "s#VUE_APP_ROOT_UUID: '.*'#VUE_APP_ROOT_UUID: '${VUE_APP_ROOT_UUID}'#g" -i $index_file
 }
 
 replace_org_unit_hierarchy_uuids() {
@@ -41,7 +41,7 @@ replace_org_unit_hierarchy_uuids() {
     exit 1
   fi
   # NOTE: single quotes are necessary around $(...) since the value may contain JSON
-  sed "s#VUE_APP_ORG_UNIT_HIERARCHY_UUIDS: \".*\"#VUE_APP_ORG_UNIT_HIERARCHY_UUIDS: '${VUE_APP_ORG_UNIT_HIERARCHY_UUIDS}'#g" -i $index_file
+  sed "s#VUE_APP_ORG_UNIT_HIERARCHY_UUIDS: '.*'#VUE_APP_ORG_UNIT_HIERARCHY_UUIDS: '${VUE_APP_ORG_UNIT_HIERARCHY_UUIDS}'#g" -i $index_file
 }
 
 replace_global_app_title() {
@@ -53,7 +53,7 @@ replace_global_app_title() {
   fi
   # Check if variable is set, regardless of empty or not
   if [ ! -z "${VUE_APP_TITLE+x}" ]; then
-    sed "s#VUE_APP_TITLE: \".*\"#VUE_APP_TITLE: '${VUE_APP_TITLE}'#g" -i $index_file
+    sed "s#VUE_APP_TITLE: '.*'#VUE_APP_TITLE: '${VUE_APP_TITLE}'#g" -i $index_file
     sed "s#<title>.*</title>#<title>${VUE_APP_TITLE}</title>#g" -i $index_file
   fi
 
@@ -66,7 +66,7 @@ replace_global_replace_org_person_relation() {
     echo >&3 "$ME: ERROR: $index_file does not exist"
     exit 1
   fi
-  sed "s#VUE_APP_ORG_PERSON_RELATION: \".*\"#VUE_APP_ORG_PERSON_RELATION: '${VUE_APP_ORG_PERSON_RELATION}'#g" -i $index_file
+  sed "s#VUE_APP_ORG_PERSON_RELATION: '.*'#VUE_APP_ORG_PERSON_RELATION: '${VUE_APP_ORG_PERSON_RELATION}'#g" -i $index_file
 }
 
 replace_tree_layout() {
@@ -76,7 +76,7 @@ replace_tree_layout() {
     echo >&3 "$ME: ERROR: $index_file does not exist"
     exit 1
   fi
-  sed "s#VUE_APP_TREE_LAYOUT: \".*\"#VUE_APP_TREE_LAYOUT: '${VUE_APP_TREE_LAYOUT}'#g" -i $index_file
+  sed "s#VUE_APP_TREE_LAYOUT: '.*'#VUE_APP_TREE_LAYOUT: '${VUE_APP_TREE_LAYOUT}'#g" -i $index_file
 }
 
 replace_logo_path() {
@@ -86,7 +86,7 @@ replace_logo_path() {
     echo >&3 "$ME: ERROR: $index_file does not exist"
     exit 1
   fi
-  sed "s#VUE_APP_LOGO_PATH: \".*\"#VUE_APP_LOGO_PATH: '${VUE_APP_LOGO_PATH}'#g" -i $index_file
+  sed "s#VUE_APP_LOGO_PATH: '.*'#VUE_APP_LOGO_PATH: '${VUE_APP_LOGO_PATH}'#g" -i $index_file
 }
 
 replace_hide_org_unit_uuids() {
@@ -97,7 +97,7 @@ replace_hide_org_unit_uuids() {
     exit 1
   fi
   # NOTE: single quotes are necessary around $(...) since the value may contain JSON
-  sed "s#VUE_APP_HIDE_ORG_UNIT_UUIDS: \".*\"#VUE_APP_HIDE_ORG_UNIT_UUIDS: '${VUE_APP_HIDE_ORG_UNIT_UUIDS}'#g" -i $index_file
+  sed "s#VUE_APP_HIDE_ORG_UNIT_UUIDS: '.*'#VUE_APP_HIDE_ORG_UNIT_UUIDS: '${VUE_APP_HIDE_ORG_UNIT_UUIDS}'#g" -i $index_file
 }
 
 replace_hide_org_units_by_name() {
@@ -108,7 +108,7 @@ replace_hide_org_units_by_name() {
     exit 1
   fi
   # NOTE: single quotes are necessary around $(...) since the value may contain JSON
-  sed "s#VUE_APP_HIDE_ORG_UNITS_BY_NAME: \".*\"#VUE_APP_HIDE_ORG_UNITS_BY_NAME: '${VUE_APP_HIDE_ORG_UNITS_BY_NAME}'#g" -i $index_file
+  sed "s#VUE_APP_HIDE_ORG_UNITS_BY_NAME: '.*'#VUE_APP_HIDE_ORG_UNITS_BY_NAME: '${VUE_APP_HIDE_ORG_UNITS_BY_NAME}'#g" -i $index_file
 }
 
 replace_hide_org_unit_levels() {
@@ -119,7 +119,7 @@ replace_hide_org_unit_levels() {
     exit 1
   fi
   # NOTE: single quotes are necessary around $(...) since the value may contain JSON
-  sed "s#VUE_APP_HIDE_ORG_UNIT_LEVELS: \".*\"#VUE_APP_HIDE_ORG_UNIT_LEVELS: '${VUE_APP_HIDE_ORG_UNIT_LEVELS}'#g" -i $index_file
+  sed "s#VUE_APP_HIDE_ORG_UNIT_LEVELS: '.*'#VUE_APP_HIDE_ORG_UNIT_LEVELS: '${VUE_APP_HIDE_ORG_UNIT_LEVELS}'#g" -i $index_file
 }
 
 replace_sort_specific_units_to_bottom() {
@@ -129,7 +129,7 @@ replace_sort_specific_units_to_bottom() {
     echo >&3 "$ME: ERROR: $index_file does not exist"
     exit 1
   fi
-  sed "s#VUE_APP_SORT_SPECIFIC_UNITS_TO_BOTTOM: \".*\"#VUE_APP_SORT_SPECIFIC_UNITS_TO_BOTTOM: '${VUE_APP_SORT_SPECIFIC_UNITS_TO_BOTTOM}'#g" -i $index_file
+  sed "s#VUE_APP_SORT_SPECIFIC_UNITS_TO_BOTTOM: '.*'#VUE_APP_SORT_SPECIFIC_UNITS_TO_BOTTOM: '${VUE_APP_SORT_SPECIFIC_UNITS_TO_BOTTOM}'#g" -i $index_file
 }
 
 replace_show_extension_1() {
@@ -139,7 +139,7 @@ replace_show_extension_1() {
     echo >&3 "$ME: ERROR: $index_file does not exist"
     exit 1
   fi
-  sed "s#VUE_APP_SHOW_EXTENSION_1: \".*\"#VUE_APP_SHOW_EXTENSION_1: '${VUE_APP_SHOW_EXTENSION_1}'#g" -i $index_file
+  sed "s#VUE_APP_SHOW_EXTENSION_1: '.*'#VUE_APP_SHOW_EXTENSION_1: '${VUE_APP_SHOW_EXTENSION_1}'#g" -i $index_file
 }
 
 replace_show_extension_3_viborg() {
@@ -149,7 +149,7 @@ replace_show_extension_3_viborg() {
     echo >&3 "$ME: ERROR: $index_file does not exist"
     exit 1
   fi
-  sed "s#VUE_APP_SHOW_EXTENSION_3_VIBORG: \".*\"#VUE_APP_SHOW_EXTENSION_3_VIBORG: '${VUE_APP_SHOW_EXTENSION_3_VIBORG}'#g" -i $index_file
+  sed "s#VUE_APP_SHOW_EXTENSION_3_VIBORG: '.*'#VUE_APP_SHOW_EXTENSION_3_VIBORG: '${VUE_APP_SHOW_EXTENSION_3_VIBORG}'#g" -i $index_file
 }
 
 replace_remove_org_unit_email() {
@@ -159,7 +159,7 @@ replace_remove_org_unit_email() {
     echo >&3 "$ME: ERROR: $index_file does not exist"
     exit 1
   fi
-  sed "s#VUE_APP_REMOVE_ORG_UNIT_EMAIL: \".*\"#VUE_APP_REMOVE_ORG_UNIT_EMAIL: '${VUE_APP_REMOVE_ORG_UNIT_EMAIL}'#g" -i $index_file
+  sed "s#VUE_APP_REMOVE_ORG_UNIT_EMAIL: '.*'#VUE_APP_REMOVE_ORG_UNIT_EMAIL: '${VUE_APP_REMOVE_ORG_UNIT_EMAIL}'#g" -i $index_file
 }
 
 replace_hidden_address_type_user_keys() {
@@ -169,7 +169,7 @@ replace_hidden_address_type_user_keys() {
     echo >&3 "$ME: ERROR: $index_file does not exist"
     exit 1
   fi
-  sed "s#VUE_APP_HIDDEN_ADDRESS_TYPE_USER_KEYS: \".*\"#VUE_APP_HIDDEN_ADDRESS_TYPE_USER_KEYS: '${VUE_APP_HIDDEN_ADDRESS_TYPE_USER_KEYS}'#g" -i $index_file
+  sed "s#VUE_APP_HIDDEN_ADDRESS_TYPE_USER_KEYS: '.*'#VUE_APP_HIDDEN_ADDRESS_TYPE_USER_KEYS: '${VUE_APP_HIDDEN_ADDRESS_TYPE_USER_KEYS}'#g" -i $index_file
 }
 
 replace_remove_person_count() {
@@ -179,7 +179,7 @@ replace_remove_person_count() {
     echo >&3 "$ME: ERROR: $index_file does not exist"
     exit 1
   fi
-  sed "s#VUE_APP_REMOVE_PERSON_COUNT: \".*\"#VUE_APP_REMOVE_PERSON_COUNT: '${VUE_APP_REMOVE_PERSON_COUNT}'#g" -i $index_file
+  sed "s#VUE_APP_REMOVE_PERSON_COUNT: '.*'#VUE_APP_REMOVE_PERSON_COUNT: '${VUE_APP_REMOVE_PERSON_COUNT}'#g" -i $index_file
 }
 
 replace_remove_children_count() {
@@ -189,7 +189,7 @@ replace_remove_children_count() {
     echo >&3 "$ME: ERROR: $index_file does not exist"
     exit 1
   fi
-  sed "s#VUE_APP_REMOVE_CHILDREN_COUNT: \".*\"#VUE_APP_REMOVE_CHILDREN_COUNT: '${VUE_APP_REMOVE_CHILDREN_COUNT}'#g" -i $index_file
+  sed "s#VUE_APP_REMOVE_CHILDREN_COUNT: '.*'#VUE_APP_REMOVE_CHILDREN_COUNT: '${VUE_APP_REMOVE_CHILDREN_COUNT}'#g" -i $index_file
 }
 
 replace_remove_engagement_type_uuid() {
@@ -199,7 +199,7 @@ replace_remove_engagement_type_uuid() {
     echo >&3 "$ME: ERROR: $index_file does not exist"
     exit 1
   fi
-  sed "s#VUE_APP_REMOVE_ENGAGEMENT_TYPE_UUID: \".*\"#VUE_APP_REMOVE_ENGAGEMENT_TYPE_UUID: '${VUE_APP_REMOVE_ENGAGEMENT_TYPE_UUID}'#g" -i $index_file
+  sed "s#VUE_APP_REMOVE_ENGAGEMENT_TYPE_UUID: '.*'#VUE_APP_REMOVE_ENGAGEMENT_TYPE_UUID: '${VUE_APP_REMOVE_ENGAGEMENT_TYPE_UUID}'#g" -i $index_file
 }
 
 replace_remove_manager_engagement() {
@@ -209,7 +209,7 @@ replace_remove_manager_engagement() {
     echo >&3 "$ME: ERROR: $index_file does not exist"
     exit 1
   fi
-  sed "s#VUE_APP_REMOVE_MANAGER_ENGAGEMENT: \".*\"#VUE_APP_REMOVE_MANAGER_ENGAGEMENT: '${VUE_APP_REMOVE_MANAGER_ENGAGEMENT}'#g" -i $index_file
+  sed "s#VUE_APP_REMOVE_MANAGER_ENGAGEMENT: '.*'#VUE_APP_REMOVE_MANAGER_ENGAGEMENT: '${VUE_APP_REMOVE_MANAGER_ENGAGEMENT}'#g" -i $index_file
 }
 
 replace_show_nickname() {
@@ -219,7 +219,7 @@ replace_show_nickname() {
     echo >&3 "$ME: ERROR: $index_file does not exist"
     exit 1
   fi
-  sed "s#VUE_APP_SHOW_NICKNAME: \".*\"#VUE_APP_SHOW_NICKNAME: '${VUE_APP_SHOW_NICKNAME}'#g" -i $index_file
+  sed "s#VUE_APP_SHOW_NICKNAME: '.*'#VUE_APP_SHOW_NICKNAME: '${VUE_APP_SHOW_NICKNAME}'#g" -i $index_file
 }
 
 replace_keycloak_client_id() {
@@ -229,7 +229,7 @@ replace_keycloak_client_id() {
     echo >&3 "$ME: ERROR: $index_file does not exist"
     exit 1
   fi
-  sed "s#VUE_APP_KEYCLOAK_CLIENT_ID: \".*\"#VUE_APP_KEYCLOAK_CLIENT_ID: '${VUE_APP_KEYCLOAK_CLIENT_ID}'#g" -i $index_file
+  sed "s#VUE_APP_KEYCLOAK_CLIENT_ID: '.*'#VUE_APP_KEYCLOAK_CLIENT_ID: '${VUE_APP_KEYCLOAK_CLIENT_ID}'#g" -i $index_file
 }
 
 replace_keycloak_client_secret() {
@@ -239,7 +239,7 @@ replace_keycloak_client_secret() {
     echo >&3 "$ME: ERROR: $index_file does not exist"
     exit 1
   fi
-  sed "s#VUE_APP_KEYCLOAK_CLIENT_SECRET: \".*\"#VUE_APP_KEYCLOAK_CLIENT_SECRET: '${VUE_APP_KEYCLOAK_CLIENT_SECRET}'#g" -i $index_file
+  sed "s#VUE_APP_KEYCLOAK_CLIENT_SECRET: '.*'#VUE_APP_KEYCLOAK_CLIENT_SECRET: '${VUE_APP_KEYCLOAK_CLIENT_SECRET}'#g" -i $index_file
 }
 
 replace_favicon_path() {
@@ -249,7 +249,7 @@ replace_favicon_path() {
     echo >&3 "$ME: ERROR: $index_file does not exist"
     exit 1
   fi
-  sed "s#VUE_APP_FAVICON_PATH: \".*\"#VUE_APP_FAVICON_PATH: '${VUE_APP_FAVICON_PATH}'#g" -i $index_file
+  sed "s#VUE_APP_FAVICON_PATH: '.*'#VUE_APP_FAVICON_PATH: '${VUE_APP_FAVICON_PATH}'#g" -i $index_file
 }
 
 replace_css_path() {
