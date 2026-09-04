@@ -1,0 +1,122 @@
+/*
+    =====================================================
+    Custom CSS variables and styles for Gladsaxe kommune
+    =====================================================
+    --primary-color-gladsaxe: rgb(115,161,82)
+    --background-color-gladsaxe: rgb(185,208,169)
+
+    Colors from "GLADSAXE FARVEKODER til gladsaxe.dk - 2024".
+    Green chosen for the org chart in "MO organisationsdiagram
+    farveforslag - valg.pptx".
+
+    Grøn            115-161-82    #73A152
+    Grøn 50 %       185-208-169   #B9D0A9
+    Grøn wcag       95-140-63     #5F8C3F
+    Lysegrøn        182-202-92    #B6CA5C
+    Lysegrøn 50 %   219-229-174   #DBE5AE
+    Kommunens Blå   0-132-186     #0084BA
+    Mørk grå        111-112-114   #6F7072
+    Koksgrå 2       66-66-66      #424242
+    'Næsten sort'   38-38-38      #262626
+*/
+
+:root {
+  /* Gladsaxe colors defined above */
+  --gladsaxe-green: #73a152;
+  --gladsaxe-green-50: #b9d0a9;
+  --gladsaxe-green-wcag: #5f8c3f;
+  --gladsaxe-blue: #0084ba;
+  --gladsaxe-light-green: #b6ca5c;
+  --gladsaxe-light-green-50: #dbe5ae;
+
+  /* Org-viewer variables */
+  --primary-color: var(
+    --gladsaxe-green
+  ) !important; /* Primary branding color for high visibility elements */
+  --secondary-color: var(
+    --gladsaxe-blue
+  ) !important; /* Used for higlights and accents */
+  --background-color: var(
+    --gladsaxe-green-50
+  ) !important; /* Light color for dark backgrounds */
+  --accent-color: var(
+    --gladsaxe-light-green
+  ) !important; /* Alternative light color for dark backgrounds */
+
+  /* Shades */
+  --shade-lightest: #fff !important;
+  --shade-lighter: var(--gladsaxe-light-green-50) !important;
+  --shade-light: var(--gladsaxe-green-50) !important;
+  --shade-dark: #6f7072 !important;
+  --shade-darker: #424242 !important;
+  --shade-darkest: #262626 !important;
+
+  --shadow-1: 0.25rem 0.25rem 0 hsla(0, 0%, 0%, 0.125) !important;
+  --shadow-2: -0.5rem 0 0 hsla(0, 0%, 0%, 0.2) !important;
+  --shadow-3: 0 0.5rem 0 hsla(0, 0%, 0%, 0.2) !important;
+
+  --font: 1em/1.4 Arial, Helvetica, sans-serif !important;
+}
+
+/*
+    Org unit names are links, so they pick up --primary-color (#73A152).
+    Against the white node body that is 3.02:1, under the 4.5:1 WCAG AA
+    asks for normal text. #5F8C3F is Gladsaxe's own tone for this (3.96:1).
+    Remove this rule to get #73A152 back, as drawn in the mockup.
+*/
+a,
+a:link,
+a:visited,
+button,
+a.btn,
+a.btn:link,
+a.btn:visited,
+input[type="submit"] {
+  color: var(--gladsaxe-green-wcag) !important;
+}
+
+a:hover,
+a:focus,
+button:hover,
+button:focus,
+a.btn:hover,
+a.btn:focus,
+input[type="submit"]:hover,
+input[type="submit"]:focus {
+  color: var(--shade-darkest) !important;
+}
+
+/* Restated, the link color above would otherwise win over the active node */
+.oc-tt-item.active > .oc-tt-node > .oc-tt-node-body > .oc-org-link {
+  color: var(--shade-darkest) !important;
+  border-left: solid 0.25rem var(--primary-color) !important;
+}
+
+/* Count bar keeps the solid brand green */
+button.inverse,
+a.btn.inverse,
+a.btn.inverse:link,
+a.btn.inverse:visited,
+input[type="submit"].inverse {
+  background-color: var(--primary-color) !important;
+  color: var(--shade-lightest) !important;
+}
+
+button.inverse:hover,
+button.inverse:active,
+button.inverse:focus,
+a.btn.inverse:hover,
+a.btn.inverse:active,
+a.btn.inverse:focus,
+input[type="submit"].inverse:hover,
+input[type="submit"].inverse:active,
+input[type="submit"].inverse:focus {
+  background-color: var(--shade-darker) !important;
+  color: var(--shade-lightest) !important;
+}
+
+.oc-header-preaction img {
+  height: 1.75rem !important;
+  width: auto !important;
+  margin-left: 0.5rem;
+}
