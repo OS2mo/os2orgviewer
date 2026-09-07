@@ -46,13 +46,16 @@ Refer to [the development section](./app/docs/development.md) for further develo
 
 ### Deploy quick start
 
-Inside [os2orgviewer/app](./app) directory, run the build script
+Inside the [os2orgviewer/app](./app) directory, run the build script
 
 ```
-npm run build (default setup)
+npm run build
 ```
 
-New directories will be created in the [app/dist](./app/dist) folder with your build (example: `app/dist/default/`). Hook it up to a server, and you'll be good to go.
+The build is written to the repository's [dist](./dist) folder. Hook it up to a server, and you'll be good to go.
+
+The build bakes the configuration into `index.html`, but a deployed container can override it at
+startup - see [the configuration section](./app/docs/configuration.md).
 
 ## Documentation
 
