@@ -1,0 +1,60 @@
+/*
+    =====================================================
+    Custom CSS variables and styles for Gladsaxe kommune
+    =====================================================
+    --primary-color-gladsaxe: rgb(115,161,82)
+    --background-color-gladsaxe: rgb(185,208,169)
+
+    Grøn            115-161-82    #73A152
+    Grøn 50 %       185-208-169   #B9D0A9
+    Lysegrøn        182-202-92    #B6CA5C
+    Lysegrøn 50 %   219-229-174   #DBE5AE
+    Kommunens Blå   0-132-186     #0084BA
+    Mørk grå        111-112-114   #6F7072
+    Koksgrå 2       66-66-66      #424242
+    'Næsten sort'   38-38-38      #262626
+
+*/
+
+:root {
+  /* Gladsaxe colors defined above */
+  --gladsaxe-green: #73a152;
+  --gladsaxe-green-50: #b9d0a9;
+  --gladsaxe-blue: #0084ba;
+  --gladsaxe-light-green: #b6ca5c;
+  --gladsaxe-light-green-50: #dbe5ae;
+
+  /* Org-viewer variables */
+  --primary-color: var(
+    --gladsaxe-green
+  ) !important; /* Primary branding color for high visibility elements */
+  --secondary-color: var(
+    --gladsaxe-blue
+  ) !important; /* Used for higlights and accents */
+  --background-color: var(
+    --gladsaxe-green-50
+  ) !important; /* Light color for dark backgrounds */
+  --accent-color: var(
+    --gladsaxe-light-green
+  ) !important; /* Alternative light color for dark backgrounds */
+
+  /* Shades */
+  --shade-lightest: #fff !important;
+  --shade-lighter: var(--gladsaxe-light-green-50) !important;
+  --shade-light: var(--gladsaxe-green-50) !important;
+  --shade-dark: #6f7072 !important;
+  --shade-darker: #424242 !important;
+  --shade-darkest: #262626 !important;
+
+  --shadow-1: 0.25rem 0.25rem 0 hsla(0, 0%, 0%, 0.125) !important;
+  --shadow-2: -0.5rem 0 0 hsla(0, 0%, 0%, 0.2) !important;
+  --shadow-3: 0 0.5rem 0 hsla(0, 0%, 0%, 0.2) !important;
+
+  --font: 1em/1.4 Arial, Helvetica, sans-serif !important;
+}
+
+.oc-header-preaction img {
+  height: 2rem !important;
+  width: auto !important;
+  margin-left: 0.5rem;
+}
